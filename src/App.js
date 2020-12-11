@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import GlobalStyle from './styles/global';
+import api from './services/api';
+
+class App extends Component {
+
+  state = {
+    responseData: ""
+  }
+
+  async componentWillMount(){
+    //const response = await api.get("dailyrecord");
+    this.getRecords();
+  }
+
+  getRecords(){
+    api.get("dailyrecord")
+        .then(response => {
+        this.setState({
+            responseData: JSON.stringify(response.data)
+        });
+    });
+  }
+
+  render() {
+
+    const {responseData } = this.state
+
+    return (
+      <div>{responseData}</div>
+    );
+  }
 }
 
 export default App;
