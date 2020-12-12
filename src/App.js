@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import GlobalStyle from './styles/global';
+import BatidaPonto from './components/batidaponto';
 import api from './services/api';
 
 class App extends Component {
@@ -24,11 +25,13 @@ class App extends Component {
   }
 
   render() {
-
-    const {responseData } = this.state
+    const { responseData } = this.state;
 
     return (
-      <div>{responseData}</div>
+      <BatidaPonto>
+        {responseData}
+        <GlobalStyle />
+      </BatidaPonto>
     );
   }
 }
