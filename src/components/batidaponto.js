@@ -49,7 +49,7 @@ export default class Register extends Component {
           alert('Preencha a matrícula');
           return;
         }
-        
+
         api.get("dailyrecord/" + this.state.value)
             .then(response => {
               console.log(response.data);
@@ -94,13 +94,12 @@ export default class Register extends Component {
                     <button type="submit" onClick={e => this.back()}>Voltar</button>
                     {(
                       dailyRecords.map(record => {
-                        const { time__c, sfid, createddate, registernumber__c } = record;
+                        const { time__c, sfid, registernumber__c } = record;
                         return (
                           <div key={sfid}>
                             <p>Id Salesforce: {sfid}</p>
                             <p>Data/Hora do Registro: {time__c}</p>
                             <p>Matrícula: {registernumber__c}</p>
-                            <p>Data de criação no Salesforce: {createddate}</p>
                             <hr />
                           </div>
                         )
