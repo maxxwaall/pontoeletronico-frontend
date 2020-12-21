@@ -1,23 +1,31 @@
 import React, { Component } from "react";
 import api from '../services/api';
+import './batidaponto.css';
 
 export default class Register extends Component {
-    constructor(props) {
+
+      constructor(props){
         super(props);
+        
         this.state = {
-          value: ''
+          value: '',
+          dailyRecords: []
         };
-    
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
       }
     
       handleChange(event) {
+        console.log(event.target.value);
         this.setState({value: event.target.value});
+        console.log(this.state);
       }
     
       handleSubmit(event) {
-        alert('Registrar: ' + this.state.value);
+
+        if(!this.validInput()){
+          alert('Preencha a matrícula');
+          return;
+        }
+
         const data = new FormData();
 
         data.append("dailyrecord", this.state.value);
@@ -32,20 +40,75 @@ export default class Register extends Component {
         .catch((e) => {
           alert('Erro ao registrar ponto: ' + e);
         });
-        event.preventDefault();
+        //event.preventDefault();
       }
 
-      redirect(){
-        alert('Redirect: ' + this.state.value);
+      showRecords(){
+
+        if(!this.validInput()) {
+          alert('Preencha a matrícula');
+          return;
+        }
+        
+        api.get("dailyrecord/" + this.state.value)
+            .then(response => {
+              console.log(response.data);
+              this.setState({
+                  dailyRecords: response.data
+              });
+            });
+
+        console.log(this.state.dailyRecords);
+
+        document.getElementsByClassName('main-container')[0].style.display = 'none';
+        document.getElementsByClassName('dailyrecords')[0].style.display = 'block';
       }
-    
+
+      validInput(){
+        return this.state.value ? true : false;
+      }
+
+      back(){
+        window.location.href = window.location.href;
+      }
+
       render() {
+
+        const { value, dailyRecords } = this.state;
+
         return (
-          <form onSubmit={this.handleSubmit}>
-            <label> Matrícula </label>
-            <input value={this.state.value} onChange={this.handleChange} />
-            <button type="submit" value="Submit">Registrar</button>
-          </form>
+            <div className="ponto-container">
+                <div className="main-container">
+                    <h1>[k] Ponto eletrônico</h1>
+                    <div className="content-container"> 
+                      <label className="labels">Matrícula</label>
+                      <input value={value} onChange={e => this.handleChange(e)} />
+                      <button type="submit" onClick={e => this.handleSubmit()}>Registrar</button>
+                      <button type="submit" onClick={e => this.showRecords()}>Visualizar registros</button>
+                    </div>
+                </div>
+
+                <React.Fragment>
+                <div className="dailyrecords">
+                    <h2>Registros</h2>
+                    <button type="submit" onClick={e => this.back()}>Voltar</button>
+                    {(
+                      dailyRecords.map(record => {
+                        const { time__c, sfid, createddate, registernumber__c } = record;
+                        return (
+                          <div key={sfid}>
+                            <p>Id Salesforce: {sfid}</p>
+                            <p>Data/Hora do Registro: {time__c}</p>
+                            <p>Matrícula: {registernumber__c}</p>
+                            <p>Data de criação no Salesforce: {createddate}</p>
+                            <hr />
+                          </div>
+                        )
+                      })
+                    )}
+                </div>
+                </React.Fragment>
+            </div>
         );
       }
 }

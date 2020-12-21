@@ -1,0 +1,75 @@
+.ponto-container{
+    width: 100%;
+    margin: auto;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 4px;
+    height: 600px; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-image: url("kolekto_image.jpg");
+}
+
+.main-container{
+    margin: auto;
+    padding: 1%;
+    padding-bottom: 2%;
+    align-content: center;
+    margin-top: 15%;
+    width: 350px;
+    height: 235px;
+    border-radius: 4px;
+    border: 2px solid white;
+    background: #9e9e9eb3;
+}
+
+.labels{
+    display: block;
+    font-size: 20px;
+    color: white;
+}
+
+.content-container{
+    margin: 0px 12% 0px 12%;
+}
+
+.dailyrecords{
+    display: none;
+    background-color: #9e9e9ed9;
+    padding: 2%;
+}
+
+h1{
+    padding: 0px;
+    margin: 2% 0px 5% 0px;
+    text-align: center;
+    color: white;
+    font-family: sans-serif;
+}
+
+input{
+    width: 250px;
+    height: 35px;
+    border-radius: 4px;
+    border: 1px solid gainsboro;
+    font-size: 18px;
+}
+
+button{
+    width: 257px;
+    height: 40px;
+    border-radius: 4px;
+    font-size: 18px;
+    border: 1px solid #03A9F4;
+    background-color: #03A9F4;
+    cursor: pointer;
+    display: block;
+    margin-top: 15px;
+    color: #ffffff;
+}
+
+button:hover{
+    background-color: #8ec9e4;
+    border-color: #8ec9e4;
+}
