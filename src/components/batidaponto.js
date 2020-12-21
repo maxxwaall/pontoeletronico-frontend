@@ -94,9 +94,10 @@ export default class Register extends Component {
                     <button type="submit" onClick={e => this.back()}>Voltar</button>
                     {(
                       dailyRecords.map(record => {
-                        const { time__c, sfid, registernumber__c } = record;
+                        const { time__c, sfid, registernumber__c, id } = record;
                         return (
                           <div key={sfid}>
+                            <p>Id Db Heroku: {id}</p>
                             <p>Id Salesforce: {sfid}</p>
                             <p>Data/Hora do Registro: {time__c}</p>
                             <p>Matrícula: {registernumber__c}</p>
